@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class Harvest : MonoBehaviour
     {
         // Assignment 2
         // Call the harvester to harvest this element
+        Harvester._instance.CollectHarvest(plantName, DateTime.Now.ToString("yyyy/MM/dd h:mm tt"), 1);
 
         Destroy(gameObject);
     }

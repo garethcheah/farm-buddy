@@ -27,5 +27,27 @@ public class Shop : MonoBehaviour
 
     //Assignment 2
     // Get the harvest, add coins for the value, update UI and remove the item from the data structure
+    public void SellHarvest(string name, float pricePerItem)
+    {
+        List <CollectedHarvest> collectedHarvestList = Harvester._instance.GetCollectedHarvest();
+        CollectedHarvest collectedHarvestToRemove = new();
+        int amountOfHarvestToSell = 0;
 
+        foreach (CollectedHarvest harvest in collectedHarvestList)
+        {
+            if (harvest._name == name)
+            {
+                amountOfHarvestToSell += harvest._amount;
+                collectedHarvestToRemove = harvest;
+            }
+        }
+
+        if (collectedHarvestToRemove._name == name)
+        {
+            Harvester._instance.RemoveHarvest(collectedHarvestToRemove);
+        }
+
+        _coins += amountOfHarvestToSell * pricePerItem;
+        OnCoinsChanged(_coins);
+    }
 }

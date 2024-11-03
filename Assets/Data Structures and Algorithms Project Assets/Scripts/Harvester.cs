@@ -12,6 +12,7 @@ public class Harvester : MonoBehaviour
 
     // Harvest to sell
     // Assignment 2 - Data structure to hold collected harvests
+    private List<CollectedHarvest> collectedHarvestList = new List<CollectedHarvest>();
 
     public static Harvester _instance;
        
@@ -28,16 +29,52 @@ public class Harvester : MonoBehaviour
     // Assignment 2
     public List<CollectedHarvest> GetCollectedHarvest()
     {
-        return null;
+        return collectedHarvestList;
     }
 
     // Assignment 2
     public void RemoveHarvest(CollectedHarvest harvest)
     {
-        
+        collectedHarvestList.Remove(harvest);
     }
 
     // Assignment 2 - CollectHarvest method to collect the harvest when picked up
+    public void CollectHarvest(string plantName, string harvestedTime, int harvestedAmount)
+    {
+        int totalHarvestedAmount = harvestedAmount;
+        CollectedHarvest collectedHarvestToRemove = new();
+
+        // Determine if harvest is already part of the CollectedHarvestList
+        foreach (CollectedHarvest harvest in collectedHarvestList)
+        {
+            if (harvest._name == plantName)
+            {
+                // Harvest is already in collected list. Add previously harvested amount to current amount.
+                totalHarvestedAmount += harvest._amount;
+
+                // Mark harvest for removal
+                collectedHarvestToRemove = harvest;
+                break;
+            }
+        }
+
+        // Remove harvest from collected list
+        if (collectedHarvestToRemove._name == plantName)
+        {
+            collectedHarvestList.Remove(collectedHarvestToRemove);
+        }
+
+        CollectedHarvest collectedHarvest = new()
+        {
+            _name = plantName,
+            _time = harvestedTime,
+            _amount = totalHarvestedAmount
+        };
+
+        collectedHarvestList.Add(collectedHarvest);
+
+        UIManager._instance.UpdateStatus($"At {harvestedTime}, {totalHarvestedAmount} {plantName} were harvested.");
+    }
     
 
     public void ShowHarvest(string plantName, int harvestAmount, int seedAmount, Vector2 position)

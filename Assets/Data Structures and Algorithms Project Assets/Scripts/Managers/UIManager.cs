@@ -65,7 +65,30 @@ public class UIManager : MonoBehaviour
     public void ShowTotalHarvest()
     {
         //Assignment 2
-        
+
+        // Clear previously populated harvest items for sale
+        foreach (Transform child in _sellHarvestHolder)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Populate harvest items for sale
+        List<CollectedHarvest> collectedHarvestList = Harvester._instance.GetCollectedHarvest();
+
+        foreach (CollectedHarvest harvest in collectedHarvestList)
+        {
+            PlantTypeScriptableObject plantType = Planter._instance.GetPlantResourseByName(harvest._name);
+
+            if (plantType != null)
+            {
+                SellHarvestUIElement sellHarvestUIElement = Instantiate(_sellHarvestUIElement, _sellHarvestHolder);
+                sellHarvestUIElement.SetElement(harvest, plantType._plantTypeName, harvest._time, plantType._pricePerHarvest, harvest._amount, plantType._harvestSprite);
+                sellHarvestUIElement.GetButton().onClick.AddListener(() =>
+                {
+                    GameManager._instance.GetShop().SellHarvest(plantType._plantTypeName, plantType._pricePerHarvest);
+                });
+            }
+        }
     }
 
     
