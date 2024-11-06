@@ -33,20 +33,25 @@ public class Shop : MonoBehaviour
         CollectedHarvest collectedHarvestToRemove = new();
         int amountOfHarvestToSell = 0;
 
+        // Find harvest in CollectedHarvestList
         foreach (CollectedHarvest harvest in collectedHarvestList)
         {
             if (harvest._name == name)
             {
+                // Set harvest amount and mark for removal
                 amountOfHarvestToSell += harvest._amount;
                 collectedHarvestToRemove = harvest;
+                break;
             }
         }
 
+        // Remove harvest from CollectedHarvestList
         if (collectedHarvestToRemove._name == name)
         {
             Harvester._instance.RemoveHarvest(collectedHarvestToRemove);
         }
 
+        // Calculate number of coins and update UI
         _coins += amountOfHarvestToSell * pricePerItem;
         OnCoinsChanged(_coins);
     }

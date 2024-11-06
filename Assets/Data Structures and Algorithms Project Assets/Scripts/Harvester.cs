@@ -61,7 +61,7 @@ public class Harvester : MonoBehaviour
         // Remove existing harvest record from collected list if applicable
         if (collectedHarvestToRemove._name == plantName)
         {
-            collectedHarvestList.Remove(collectedHarvestToRemove);
+            RemoveHarvest(collectedHarvestToRemove);
         }
 
         // Add harvest to collected list
