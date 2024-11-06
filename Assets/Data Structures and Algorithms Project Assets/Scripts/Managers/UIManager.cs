@@ -72,9 +72,9 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Populate harvest items for sale
         List<CollectedHarvest> collectedHarvestList = Harvester._instance.GetCollectedHarvest();
 
+        // Populate harvest items for sale
         foreach (CollectedHarvest harvest in collectedHarvestList)
         {
             PlantTypeScriptableObject plantType = Planter._instance.GetPlantResourseByName(harvest._name);

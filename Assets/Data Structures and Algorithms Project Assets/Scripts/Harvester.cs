@@ -58,19 +58,19 @@ public class Harvester : MonoBehaviour
             }
         }
 
-        // Remove harvest from collected list
+        // Remove existing harvest record from collected list if applicable
         if (collectedHarvestToRemove._name == plantName)
         {
             collectedHarvestList.Remove(collectedHarvestToRemove);
         }
 
+        // Add harvest to collected list
         CollectedHarvest collectedHarvest = new()
         {
             _name = plantName,
             _time = harvestedTime,
             _amount = totalHarvestedAmount
         };
-
         collectedHarvestList.Add(collectedHarvest);
 
         UIManager._instance.UpdateStatus($"At {harvestedTime}, {totalHarvestedAmount} {plantName} were harvested.");
